@@ -5,6 +5,7 @@ from .serializers import VideoGameSerializer, \
 from .models import VideoGame, UserProfile, Party, PartyMessage
 
 from django.contrib.auth.models import User
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from django.http import JsonResponse
@@ -33,10 +34,13 @@ class PartyMessageViewSet(viewsets.ModelViewSet):
 
 
 class PartyViewSet(viewsets.ModelViewSet):
+
     queryset = Party.objects.all().order_by('id')
     serializer_class = PartySerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['video_game']
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
