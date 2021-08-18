@@ -23,14 +23,52 @@ def welcome(request):
     return JsonResponse(content)
 
 
-class PartyMessageViewSet(viewsets.ModelViewSet):
-    queryset = PartyMessage.objects.all().order_by('created_at')
+class PartyMessageList(generics.ListCreateAPIView):
+    """
+    List and create for party messages, showed at "/parties/<id>/messages"
+    """
+    serializer_class = PartyMessageSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self, **kwargs):
+        """
+        This view should return a list of all messages from the current party
+        """
+        party_id = self.kwargs['party_id']
+        return PartyMessage.objects.filter(party__id=party_id)
+
+    def perform_create(self, serializer, **kwargs):
+        """
+        Saving Party messages with owner as current user and party as current
+        party in URL.
+        """
+        party_id = self.kwargs['party_id']
+        party = Party.objects.get(pk=party_id)
+        serializer.save(owner=self.request.user, party=party)
+
+
+class PartyMessageDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PartyMessageSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly]
 
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+    def get_queryset(self, **kwargs):
+        """
+        This view should return a list of all messages from the current party
+        """
+        party_id = self.kwargs['party_id']
+        return PartyMessage.objects.filter(party__id=party_id)
+
+
+# class PartyMessageViewSet(viewsets.ModelViewSet):
+#     queryset = PartyMessage.objects.all().order_by('created_at')
+#     serializer_class = PartyMessageSerializer
+#     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+#                           IsOwnerOrReadOnly]
+#
+#
+#     def perform_create(self, serializer):
+#         serializer.save(owner=self.request.user)
 
 
 class PartyViewSet(viewsets.ModelViewSet):
