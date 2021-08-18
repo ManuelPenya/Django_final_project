@@ -4,13 +4,14 @@ from django.contrib.auth.models import User
 from .models import VideoGame, UserProfile, Party, PartyMessage
 
 
-class PartyMessageSerializer(serializers.HyperlinkedModelSerializer):
+class PartyMessageSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
+    party = serializers.ReadOnlyField(source='party.name')
 
     class Meta:
         model = PartyMessage
         fields = ('id',
-                  'url',
+                  # 'url',
                   'message',
                   'owner',
                   'party',
@@ -20,11 +21,12 @@ class PartyMessageSerializer(serializers.HyperlinkedModelSerializer):
 
 class PartySerializer(serializers.HyperlinkedModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
-    party_messages = serializers.HyperlinkedRelatedField(
-        many=True,
-        view_name='partymessage-detail',
-        read_only=True
-    )
+    # TODO: not sure if I can get the linked relationship working
+    # party_messages = serializers.HyperlinkedRelatedField(
+    #     many=True,
+    #     view_name='partymessage-detail',
+    #     read_only=True
+    # )
 
     class Meta:
         model = Party
@@ -35,7 +37,7 @@ class PartySerializer(serializers.HyperlinkedModelSerializer):
                   'description',
                   'video_game',
                   'owner',
-                  'party_messages'
+                  # 'party_messages'
                   )
 
 

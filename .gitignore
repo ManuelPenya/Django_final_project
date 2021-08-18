@@ -4,5 +4,10 @@
 /include/
 /lib/
 /lib64/
-/*/__pycache__/
+
 /.idea/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
