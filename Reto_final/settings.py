@@ -63,8 +63,7 @@ ROOT_URLCONF = 'Reto_final.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -81,7 +80,17 @@ WSGI_APPLICATION = 'Reto_final.wsgi.application'
 
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS':
-        ['django_filters.rest_framework.DjangoFilterBackend']
+        ['django_filters.rest_framework.DjangoFilterBackend'],
+    # Authentication Scheme
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        ),
+    # Permission Policies
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+        ]
 }
 
 # Database

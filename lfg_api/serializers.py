@@ -21,10 +21,11 @@ class PartyMessageSerializer(serializers.ModelSerializer):
 
 class PartySerializer(serializers.HyperlinkedModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
-    # TODO: not sure if I can get the linked relationship working
+    # TODO: I cannot make it to link party with party messages using this model
+    #  serializer. Any idea why?
     # party_messages = serializers.HyperlinkedRelatedField(
     #     many=True,
-    #     view_name='partymessage-detail',
+    #     view_name='party-message-detail',
     #     read_only=True
     # )
 

@@ -48,6 +48,10 @@ class PartyMessageList(generics.ListCreateAPIView):
 
 
 class PartyMessageDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    View to show party messages for an specific party group.
+    Url established as /parties/<party_id>/messages/ (see urls.py)
+    """
     serializer_class = PartyMessageSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly]
@@ -60,18 +64,12 @@ class PartyMessageDetail(generics.RetrieveUpdateDestroyAPIView):
         return PartyMessage.objects.filter(party__id=party_id)
 
 
-# class PartyMessageViewSet(viewsets.ModelViewSet):
-#     queryset = PartyMessage.objects.all().order_by('created_at')
-#     serializer_class = PartyMessageSerializer
-#     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-#                           IsOwnerOrReadOnly]
-#
-#
-#     def perform_create(self, serializer):
-#         serializer.save(owner=self.request.user)
-
-
 class PartyViewSet(viewsets.ModelViewSet):
+    """
+    Parties view that includes a filtering method to search for parties
+    given a video_game.
+    Search url as /parties?video_game=????/
+    """
 
     queryset = Party.objects.all().order_by('id')
     serializer_class = PartySerializer
@@ -92,13 +90,6 @@ class VideoGameViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
-
-
-# class UserViewSet(viewsets.ModelViewSet):
-#     queryset = User.objects.all().order_by('id')
-#     serializer_class = UserSerializer
-#     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-#                           IsCorrectUserOrReadOnly]
 
 
 class UserList(generics.ListAPIView):

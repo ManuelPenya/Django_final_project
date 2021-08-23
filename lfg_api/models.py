@@ -9,6 +9,10 @@ from django.dispatch import receiver
 
 
 class UserProfile(models.Model):
+    """
+    Extended user model with some features not included in default user
+    class in django, social network and steam user in this case
+    """
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE)
@@ -19,9 +23,16 @@ class UserProfile(models.Model):
         max_length=100,
         blank=True)
 
+    def __str__(self):
+        return self.user.name
+
 
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
+    """
+    In case a user is created or updated, do so with corresponding
+     user_profile object.
+    """
     if created:
         UserProfile.objects.create(user=instance)
     else:

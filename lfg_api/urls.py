@@ -19,7 +19,7 @@ urlpatterns = [
             name='partymessage-list'),
     re_path('parties/(?P<party_id>[^/.]+)/messages/(?P<pk>[^/.]+)/',
             views.PartyMessageDetail.as_view(),
-            name='partymessage-detail'),
+            name='party-message-detail'),
     path('api-auth/', include('rest_framework.urls',
                               namespace='rest_framework')),
     path('api/welcome/', views.welcome),
