@@ -27,6 +27,7 @@ steam user and/or preferred social network link.
 * User edit profile (with extra fields)
 * Complete CRUD for videogames, party groups and party messages
 * Read permissions for user generated objects not for current user
+* Search filter for party groups for specific videogames.
 
 ## Requirements
 * python              3.8.10
