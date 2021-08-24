@@ -29,12 +29,11 @@ steam user and/or preferred social network link.
 * Read permissions for user generated objects not for current user
 
 ## Requirements
-python              3.8.10
-Django              3.2.5
-django-allauth      0.44.0
-django-filter       2.4.0
-django-rest-auth    0.9.5
-djangorestframework 3.12.4
-oauthlib            3.1.1
-pip                 21.1.3
-psycopg2            2.9.1
+* python              3.8.10
+* Django              3.2.5
+* django-allauth      0.44.0
+* django-filter       2.4.0
+* django-rest-auth    0.9.5
+* djangorestframework 3.12.4
+* oauthlib            3.1.1
+* psycopg2            2.9.1
